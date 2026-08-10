@@ -1,0 +1,418 @@
+Problem Statement
+
+1. Title
+
+AI-Powered Public Infrastructure Issue Reporting System
+
+---
+
+2. Domain
+
+CivicTech / Smart City / Artificial Intelligence
+
+The project focuses on using technology to improve the way citizens report and track public infrastructure problems. It combines a civic issue management platform with an AI-based image classification enhancement.
+
+---
+
+3. Who is the User?
+
+3.1 Citizen
+
+The Citizen is the primary user who can report public infrastructure problems such as:
+
+- Potholes
+- Damaged roads
+- Broken streetlights
+- Garbage accumulation
+- Water leakage
+- Other public infrastructure issues
+
+The citizen can register, log in, submit an issue with a description, photograph and location, and track the status of the submitted complaint.
+
+3.2 Municipal Officer
+
+The Municipal Officer is responsible for handling reported infrastructure issues.
+
+The officer can:
+
+- View assigned complaints
+- Verify reported issues
+- View issue photographs and locations
+- Update complaint status
+- Add resolution details
+- Mark issues as resolved
+
+3.3 Administrator
+
+The Administrator manages and monitors the overall application.
+
+The administrator can:
+
+- Manage users
+- Manage issue categories
+- Manage departments
+- Assign issues to officers
+- Monitor all reported issues
+- View issue statistics
+- Manage the overall system
+
+---
+
+4. What Problem Are We Solving?
+
+Citizens frequently encounter public infrastructure problems such as potholes, damaged roads, broken streetlights, garbage accumulation and water leakage. However, they may not know the appropriate department or process for reporting these issues.
+
+Traditional complaint processes may also make it difficult for citizens to know whether their complaint has been received, verified, assigned to an officer, or resolved. This can result in delayed reporting, poor visibility and difficulty in tracking the progress of complaints.
+
+For example, when a citizen notices a large pothole on a busy road, they can use this application to upload a photograph, provide a description and capture the location of the issue. The system records the complaint and makes it available to the appropriate authority for verification, assignment and resolution.
+
+The proposed system provides a centralized platform where citizens can report infrastructure issues and authorities can efficiently manage, track and resolve them.
+
+---
+
+5. Proposed Solution
+
+The proposed system is a web-based AI-Powered Public Infrastructure Issue Reporting System that provides a centralized platform for reporting, tracking and managing public infrastructure issues.
+
+5.1 Citizen Module
+
+The citizen module will provide:
+
+- User registration
+- Secure login
+- Infrastructure issue reporting
+- Issue description
+- Photograph upload
+- Location capture
+- Issue category selection
+- View submitted complaints
+- View complaint details
+- Track complaint status
+- View complaint history
+- Receive status notifications
+
+5.2 Officer Module
+
+The officer module will provide:
+
+- Secure officer login
+- View assigned issues
+- View issue details
+- View uploaded photographs
+- View issue location
+- Verify reported complaints
+- Update issue status
+- Add resolution details
+- Mark issues as resolved
+
+5.3 Administrator Module
+
+The administrator module will provide:
+
+- Secure admin login
+- User management
+- Officer management
+- Issue category management
+- Department management
+- Issue assignment
+- Monitoring of all complaints
+- Dashboard statistics
+- Complaint status monitoring
+
+5.4 Issue Tracking
+
+Each reported issue will have a lifecycle that can be tracked.
+
+Example:
+
+Reported → Verified → Assigned → In Progress → Resolved
+
+The system will maintain the status history of an issue so that the progress from reporting to resolution can be tracked.
+
+5.5 Location Management
+
+The system will store the location of reported infrastructure issues using location information such as coordinates and address details.
+
+This allows officers to identify where the issue occurred and handle the complaint appropriately.
+
+5.6 Notification Module
+
+The system will provide notifications when important complaint events occur, such as:
+
+- Issue submitted
+- Issue verified
+- Issue assigned
+- Issue status updated
+- Issue resolved
+
+5.7 Dashboard and Statistics
+
+The administrator will have a dashboard to monitor the overall system.
+
+The dashboard can display:
+
+- Total reported issues
+- Pending issues
+- Verified issues
+- Assigned issues
+- Issues in progress
+- Resolved issues
+- Issues by category
+- Issues by department
+
+5.8 AI-Based Issue Classification — Enhancement Feature
+
+As the enhancement feature, the system will use an AI-based image classification approach to analyze an uploaded infrastructure issue photograph and suggest an appropriate issue category.
+
+For example:
+
+Uploaded Image → AI Analysis → Pothole Detected → Pothole Category Suggested
+
+Possible categories may include:
+
+- Pothole
+- Road Damage
+- Broken Streetlight
+- Garbage
+- Water Leakage
+- Other
+
+The citizen can review the suggested category before submitting the complaint.
+
+The AI enhancement will be implemented during the later enhancement phase of the capstone rather than making the initial MVP dependent on AI.
+
+---
+
+6. Core Entities / Database Tables
+
+The system will contain the following core database entities:
+
+1. User
+
+Stores information about registered citizens, officers and administrators.
+
+2. Role
+
+Stores user roles and permissions such as Citizen, Officer and Administrator.
+
+3. Issue
+
+Stores the main infrastructure complaint details, including description, photograph, category, location and current status.
+
+4. IssueCategory
+
+Stores different types of infrastructure problems such as potholes, garbage, streetlight damage and road damage.
+
+5. Department
+
+Stores departments responsible for handling different categories of infrastructure issues.
+
+6. Location
+
+Stores the location information associated with a reported issue.
+
+7. IssueAssignment
+
+Stores the assignment of reported issues to responsible officers.
+
+8. StatusHistory
+
+Stores the historical status changes of each issue from reporting to resolution.
+
+9. Notification
+
+Stores notifications generated for users regarding complaint updates.
+
+Main Relationships
+
+- One Role can be associated with multiple Users.
+- One Citizen can report multiple Issues.
+- One Issue belongs to one IssueCategory.
+- One Issue is associated with one Location.
+- One Department can handle multiple Issues.
+- One Issue can be assigned to an Officer.
+- One Issue can have multiple StatusHistory records.
+- One User can receive multiple Notifications.
+
+The database design will contain real relationships between the entities rather than functioning as independent CRUD tables.
+
+---
+
+7. User Roles & Permissions
+
+7.1 Citizen
+
+Permissions:
+
+- Register an account
+- Log in
+- Report infrastructure issues
+- Upload issue photographs
+- Provide issue location
+- Select or confirm issue category
+- View own reported issues
+- Track issue status
+- View issue history
+- Receive notifications
+
+Cannot:
+
+- Manage other users
+- Assign officers
+- Manage departments
+- Manage system categories
+- Access administrator functions
+
+---
+
+7.2 Municipal Officer
+
+Permissions:
+
+- Log in
+- View assigned issues
+- View issue details
+- View photographs and locations
+- Verify complaints
+- Update issue status
+- Add resolution information
+- Mark assigned issues as resolved
+
+Cannot:
+
+- Manage administrator accounts
+- Manage the complete system configuration
+- Access unrestricted administrator functions
+
+---
+
+7.3 Administrator
+
+Permissions:
+
+- Log in
+- Manage users
+- Manage officers
+- Manage issue categories
+- Manage departments
+- Assign issues to officers
+- View all reported issues
+- Monitor complaint progress
+- View system statistics
+- Manage application-level data
+
+---
+
+8. Success Criteria
+
+The project will be considered successful when the following criteria are achieved:
+
+1. A citizen should be able to register and securely log in to the application.
+
+2. A citizen should be able to submit an infrastructure complaint with a description, photograph, category and location in approximately two minutes.
+
+3. A citizen should be able to view previously submitted complaints.
+
+4. A citizen should be able to track the current status of each complaint.
+
+5. An officer should be able to view and manage assigned complaints.
+
+6. An officer should be able to verify complaints and update their status.
+
+7. The system should maintain the complete status history of each complaint from reporting to resolution.
+
+8. An administrator should be able to manage users, departments, categories and issue assignments.
+
+9. The administrator should be able to monitor overall complaint statistics through a dashboard.
+
+10. The application should provide a consistent REST API with appropriate authentication and authorization.
+
+11. The application should be deployed on a public URL by Day 41 as required by the capstone guidelines.
+
+12. The AI enhancement should analyze infrastructure issue photographs and provide a useful issue-category suggestion.
+
+13. The system should maintain secure handling of passwords, authentication tokens and environment variables.
+
+---
+
+9. Out of Scope
+
+The following features are outside the scope of this capstone project:
+
+1. Direct integration with official government complaint management systems.
+
+2. Automatic physical repair of roads, streetlights or other infrastructure.
+
+3. Processing of real government payments.
+
+4. Emergency response or emergency service management.
+
+5. Real-time CCTV monitoring.
+
+6. Real-time autonomous monitoring of every public infrastructure location.
+
+7. Training a large AI model from scratch.
+
+8. Deployment of physical IoT sensors throughout the city.
+
+9. Automatic dispatch of physical repair teams without human verification.
+
+10. Integration with confidential government databases or systems.
+
+---
+
+10. Chosen Track
+
+Backend
+
+Java 17 + Spring Boot 3.x
+
+Frontend
+
+React.js
+
+Database
+
+MySQL 8
+
+Authentication
+
+Spring Security + JWT
+
+ORM / Data Access
+
+Spring Data JPA + Hibernate
+
+API
+
+REST API
+
+API Documentation
+
+Swagger / OpenAPI
+
+Testing
+
+JUnit 5
+
+Build Tool
+
+Maven
+
+CI/CD
+
+GitHub Actions
+
+Backend Hosting
+
+Render or Railway
+
+Frontend Hosting
+
+Vercel or Netlify
+
+Database Hosting
+
+Railway / Clever Cloud / Aiven
+
+
