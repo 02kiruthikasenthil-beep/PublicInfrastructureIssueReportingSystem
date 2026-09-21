@@ -1,0 +1,67 @@
+# Local stack: PostgreSQL + Spring Boot API + React (nginx). Secrets come from .env (see .env.example).
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: civicfix-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: civic_issue
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Copy .env.example to .env first}
+    ports:
+      - "5432:5432"
+    volumes:
+      - civicfix_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d civic_issue"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: civicfix-backend
+    restart: unless-stopped
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/civic_issue
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:?Copy .env.example to .env first}
+      JWT_SECRET: ${JWT_SECRET:?Copy .env.example to .env first}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+      SEED_OFFICER_EMAIL: ${SEED_OFFICER_EMAIL:-officer@civicfix.local}
+      SEED_OFFICER_PASSWORD: ${SEED_OFFICER_PASSWORD:-}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@civicfix.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+      NOMINATIM_URL: ${NOMINATIM_URL:-https://nominatim.openstreetmap.org}
+      GEO_USER_AGENT: ${GEO_USER_AGENT:-CivicFix/0.2}
+      AI_ML_URL: ${AI_ML_URL:-}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8080/api}
+    container_name: civicfix-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  # Optional ML triage service: docker compose --profile ml up --build, then set AI_ML_URL=http://ai:8000
+  ai:
+    build: ./ai
+    container_name: civicfix-ai
+    profiles: ["ml"]
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+
+volumes:
+  civicfix_data:
